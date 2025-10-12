@@ -168,7 +168,7 @@ const OwnerDetails = () => {
                                         )}
                                     />
                                     {parseInt(numTenantProperties, 10) > 0 && (
-                                        <div className="space-y-4 bg-gray-50 p-4 rounded-md">
+                                        <Card className="space-y-4 bg-gray-50 p-4 rounded-md" style={{ backgroundColor: 'rgba(182,180,182,0.54)' }}>
                                             <h3 className="font-medium text-lg">Properties Details</h3>
                                             <div className="flex gap-3 mb-2">
                                                 <FormLabel className="w-1/2 font-medium">Address <span className="text-red-500">*</span></FormLabel>
@@ -224,7 +224,7 @@ const OwnerDetails = () => {
                                                     </div>
                                                 </div>
                                             ))}
-                                        </div>
+                                        </Card>
                                     )}
                                 </div>
                                 <FormField

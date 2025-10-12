@@ -352,7 +352,7 @@ const TenantManager = () => {
                                             </TooltipTrigger>
                                         </label>
                                         <TooltipContent>
-                                            <p>Tenant Verification is a government process in which the government needs to know whether the verification process of the tenant is completed or not.</p>
+                                            <p>Government tenant verification is when a landlord submits their tenant's information to local police for a background check to ensure their identity and check for any criminal history. </p>
                                         </TooltipContent>
                                     </Tooltip>
                                 </div>

@@ -5,7 +5,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, } from "@/components/ui/dropdown-menu";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider, } from "@/components/ui/tooltip";
 import { toast } from "@/components/ui/sonner";
 import NavBar from "@/components/NavBar";
@@ -148,26 +148,23 @@ const TenantManager = () => {
                 <NavBar></NavBar>
                 <div className="max-w-4xl mx-auto p-6">
                     <div className="border rounded-lg p-4 mb-6 bg-white shadow-sm">
-                        <label className="text-lg font-semibold">
-                            Property Address <span className="text-red-500">*</span>
-                        </label>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="outline" className="w-full justify-between">
-                                    {property || "Select Property"}
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-full">
+                        <div className="mb-4">
+                            <label className="text-lg font-semibold">
+                                Property Address <span className="text-red-500">*</span>
+                            </label>
+                        </div>
+                        <Select value={property} onValueChange={setProperty}>
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Select Property" />
+                            </SelectTrigger>
+                            <SelectContent>
                                 {propertyOptions.map((option) => (
-                                    <DropdownMenuItem
-                                        key={option}
-                                        onSelect={() => setProperty(option)}
-                                    >
-                                        {option}
-                                    </DropdownMenuItem>
-                                ))}
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                            <SelectItem key={option} value={option}>
+                                {option}
+                            </SelectItem>
+                            ))}
+                            </SelectContent>
+                        </Select>
                     </div>
 
                     <form onSubmit={handleSubmit}>
@@ -221,7 +218,7 @@ const TenantManager = () => {
                                         onChange={(e) =>
                                             handleChange(index, "tenantName", e.target.value)
                                         }
-                                        className="border rounded p-2 w-full"
+                                        className="input-focus transition-all duration-200 rounded"
                                         required
                                     />
                                 </div>
@@ -239,7 +236,7 @@ const TenantManager = () => {
                                         onChange={(e) =>
                                             handleRoommateCount(index, e.target.value)
                                         }
-                                        className="border rounded p-2 w-full"
+                                        className="input-focus transition-all duration-200 rounded"
                                         required
                                     />
                                 </div>
@@ -257,28 +254,24 @@ const TenantManager = () => {
                                                     onChange={(e) =>
                                                         handleRoommateChange(index, i, "name", e.target.value)
                                                     }
-                                                    className="border rounded p-2 w-1/2"
+                                                    className="input-focus p-2 w-1/2 transition-all duration-200 rounded"
                                                     required
                                                 />
-                                                <DropdownMenu>
-                                                    <DropdownMenuTrigger asChild>
-                                                        <Button variant="outline" className="w-1/2 justify-between">
-                                                            {mate.relationship || "Select Relationship *"}
-                                                        </Button>
-                                                    </DropdownMenuTrigger>
-                                                    <DropdownMenuContent className="w-full">
-                                                        {relationshipOptions.map((option) => (
-                                                            <DropdownMenuItem
-                                                                key={option}
-                                                                onSelect={() =>
-                                                                    handleRoommateChange(index, i, "relationship", option)
-                                                                }
-                                                            >
-                                                                {option}
-                                                            </DropdownMenuItem>
-                                                        ))}
-                                                    </DropdownMenuContent>
-                                                </DropdownMenu>
+                                                <Select
+                                                    value={mate.relationship}
+                                                    onValueChange={(value) => handleRoommateChange(index, i, "relationship", value)}
+                                                >
+                                                    <SelectTrigger className="w-1/2">
+                                                        <SelectValue placeholder="Select Relationship *" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                    {relationshipOptions.map((option) => (
+                                                        <SelectItem key={option} value={option}>
+                                                    {option}
+                                                    </SelectItem>
+                                                    ))}
+                                                    </SelectContent>
+                                                </Select>
                                             </div>
                                         ))}
                                     </div>
@@ -375,7 +368,7 @@ const TenantManager = () => {
                                                 onChange={(e) =>
                                                     handleContactChange(index, i, e.target.value)
                                                 }
-                                                className="border rounded p-2 flex-1"
+                                                className="input-focus transition-all p-2 duration-200 rounded flex-1"
                                                 required={i === 0}
                                             />
                                             {i > 0 && (
@@ -405,26 +398,26 @@ const TenantManager = () => {
                                 {/* Photo Upload */}
                                 <div className="mb-6">
                                     <label className="block font-medium mb-1">
-                                        Photo (Optional)
+                                        Photo
                                     </label>
                                     <Input
                                         type="file"
                                         accept="image/*"
                                         placeholder="Upload photo"
                                         onChange={(e) => handlePhotoChange(index, e.target.files[0])}
-                                        className="border rounded p-2 w-full"
+                                        className="input-focus transition-all duration-200 rounded w-full rounded"
                                     />
                                 </div>
                             </div>
                         ))}
 
                         {/* Submit */}
-                        <button
+                        <Button
                             type="submit"
-                            className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium py-2 rounded-md hover:opacity-90"
+                            className="w-full btn-hover-lift transition-all duration-200 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-700 hover:to-cyan-700"
                         >
                             Submit Tenant Information
-                        </button>
+                        </Button>
                     </form>
                 </div>
             </TooltipProvider>

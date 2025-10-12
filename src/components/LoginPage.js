@@ -175,7 +175,7 @@ const LoginPage = ({ onLogin }) => {
                     placeholder="Enter your phone number"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="input-focus transition-all duration-200"
+                    className="input-focus transition-all duration-200 rounded"
                     data-testid="phone-input"
                   />
                 </div>

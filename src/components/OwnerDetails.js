@@ -263,7 +263,7 @@ const OwnerDetails = () => {
                                 />
                                 <Button
                                     type="submit"
-                                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700"
+                                    className="w-full btn-hover-lift transition-all duration-200 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-700 hover:to-cyan-700"
                                 >
                                     Save
                                 </Button>
@@ -406,7 +406,7 @@ const OwnerDetails = () => {
                                 </Card>
                                 <Button
                                     type="submit"
-                                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700"
+                                    className="w-full btn-hover-lift transition-all duration-200 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-700 hover:to-cyan-700"
                                 >
                                     Save
                                 </Button>

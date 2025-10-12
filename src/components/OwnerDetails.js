@@ -13,7 +13,8 @@ const OwnerDetails = () => {
     // Form for Basic Information (now includes property details with rooms)
     const basicInfoForm = useForm({
         defaultValues: {
-            fullName: '',
+            firstName: '',
+            lastName: '',
             personalAddress: '',
             contactNumber: '',
             emailAddress: '',
@@ -86,20 +87,36 @@ const OwnerDetails = () => {
                     <CardContent className="space-y-4">
                         <Form {...basicInfoForm}>
                             <form onSubmit={handleBasicSubmit(onBasicSubmit)} className="space-y-6">
-                                <FormField
-                                    control={basicControl}
-                                    name="fullName"
-                                    rules={{ required: 'Full Name is required' }}
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Full Name<span className="text-red-500">*</span></FormLabel>
-                                            <FormControl>
-                                                <Input required className="input-focus p-2 w-full transition-all duration-200 rounded" placeholder="Enter your full name" {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
+                                <div className="grid grid-cols-2 gap-4">
+                                    <FormField
+                                        control={basicControl}
+                                        name="firstName"
+                                        rules={{ required: 'First Name is required' }}
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>First Name<span className="text-red-500">*</span></FormLabel>
+                                                <FormControl>
+                                                    <Input required className="input-focus p-2 w-full transition-all duration-200 rounded" placeholder="Enter your first name" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={basicControl}
+                                        name="lastName"
+                                        rules={{ required: 'Last Name is required' }}
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Last Name<span className="text-red-500">*</span></FormLabel>
+                                                <FormControl>
+                                                    <Input required className="input-focus p-2 w-full transition-all duration-200 rounded" placeholder="Enter your last name" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
                                 <FormField
                                     control={basicControl}
                                     name="personalAddress"
@@ -275,45 +292,47 @@ const OwnerDetails = () => {
                                         </Card>
                                     )}
                                 </div>
-                                <FormField
-                                    control={basicControl}
-                                    name="contactNumber"
-                                    rules={{
-                                        required: 'Contact Number is required',
-                                        pattern: {
-                                            value: /^[0-9]{10}$/,
-                                            message: 'Enter a valid 10-digit phone number',
-                                        },
-                                    }}
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Contact Number<span className="text-red-500">*</span></FormLabel>
-                                            <FormControl>
-                                                <Input type="tel" required className="input-focus p-2 w-full transition-all duration-200 rounded" placeholder="Enter your contact number" {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={basicControl}
-                                    name="emailAddress"
-                                    rules={{
-                                        pattern: {
-                                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                            message: 'Enter a valid email address',
-                                        },
-                                    }}
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Email Address</FormLabel>
-                                            <FormControl>
-                                                <Input type="email" className="input-focus p-2 w-full transition-all duration-200 rounded" placeholder="Enter your email address" {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
+                                <div className="grid grid-cols-2 gap-4">
+                                    <FormField
+                                        control={basicControl}
+                                        name="contactNumber"
+                                        rules={{
+                                            required: 'Contact Number is required',
+                                            pattern: {
+                                                value: /^[0-9]{10}$/,
+                                                message: 'Enter a valid 10-digit phone number',
+                                            },
+                                        }}
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Contact Number<span className="text-red-500">*</span></FormLabel>
+                                                <FormControl>
+                                                    <Input type="tel" required className="input-focus p-2 w-full transition-all duration-200 rounded" placeholder="Enter your contact number" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={basicControl}
+                                        name="emailAddress"
+                                        rules={{
+                                            pattern: {
+                                                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                                message: 'Enter a valid email address',
+                                            },
+                                        }}
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Email Address</FormLabel>
+                                                <FormControl>
+                                                    <Input type="email" className="input-focus p-2 w-full transition-all duration-200 rounded" placeholder="Enter your email address" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
                                 <Button
                                     type="submit"
                                     className="w-full btn-hover-lift transition-all duration-200 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-700 hover:to-cyan-700"

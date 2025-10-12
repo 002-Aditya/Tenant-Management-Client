@@ -150,7 +150,7 @@ const TenantManager = () => {
                     <div className="border rounded-lg p-4 mb-6 bg-white shadow-sm">
                         <div className="mb-4">
                             <label className="text-lg font-semibold">
-                                Property Address <span className="text-red-500">*</span>
+                                Property Address<span className="text-red-500">*</span>
                             </label>
                         </div>
                         <Select value={property} onValueChange={setProperty}>
@@ -209,7 +209,7 @@ const TenantManager = () => {
                                 {/* Tenant Name */}
                                 <div className="mb-4">
                                     <label className="block font-medium mb-1">
-                                        Tenant Name <span className="text-red-500">*</span>
+                                        Tenant Name<span className="text-red-500">*</span>
                                     </label>
                                     <Input
                                         type="text"
@@ -226,7 +226,7 @@ const TenantManager = () => {
                                 {/* Number of Roommates */}
                                 <div className="mb-4">
                                     <label className="block font-medium mb-1">
-                                        Number of Roommates <span className="text-red-500">*</span>
+                                        Number of Roommates<span className="text-red-500">*</span>
                                     </label>
                                     <Input
                                         type="number"
@@ -282,7 +282,7 @@ const TenantManager = () => {
                                     {/* Start Date */}
                                     <div>
                                         <label className="block font-medium mb-1">
-                                            Contract Start Date <span className="text-red-500">*</span>
+                                            Contract Start Date<span className="text-red-500">*</span>
                                         </label>
                                         <Popover>
                                             <PopoverTrigger asChild>
@@ -311,7 +311,7 @@ const TenantManager = () => {
                                     {/* End Date */}
                                     <div>
                                         <label className="block font-medium mb-1">
-                                            Contract End Date <span className="text-red-500">*</span>
+                                            Contract End Date
                                         </label>
                                         <Popover>
                                             <PopoverTrigger asChild>
@@ -339,25 +339,27 @@ const TenantManager = () => {
                                 {/* Tenant Verification */}
                                 <div className="flex items-center gap-2 mb-6">
                                     <Tooltip>
-                                        <TooltipTrigger asChild>
+                                        <label className="flex items-center gap-2 cursor-pointer">
                                             <Checkbox
                                                 checked={room.verified}
                                                 onCheckedChange={(checked) =>
                                                     handleChange(index, "verified", checked)
                                                 }
                                             />
-                                        </TooltipTrigger>
+                                            <TooltipTrigger asChild>
+                                                <span>Tenant Verification</span>
+                                            </TooltipTrigger>
+                                        </label>
                                         <TooltipContent>
-                                            <p>Verify tenant information</p>
+                                            <p>Tenant Verification is a government process in which the government needs to know whether the verification process of the tenant is completed or not.</p>
                                         </TooltipContent>
                                     </Tooltip>
-                                    <label>Tenant Verification</label>
                                 </div>
 
                                 {/* Contact Numbers */}
                                 <div className="mb-6">
                                     <label className="block font-medium mb-1">
-                                        Contact Numbers <span className="text-red-500">*</span>
+                                        Contact Numbers<span className="text-red-500">*</span>
                                     </label>
                                     {room.contacts.map((num, i) => (
                                         <div key={i} className="flex items-center gap-2 mb-2">

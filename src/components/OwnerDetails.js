@@ -120,7 +120,7 @@ const OwnerDetails = () => {
                                     rules={{ required: 'Full Name is required' }}
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Full Name</FormLabel>
+                                            <FormLabel>Full Name<span className="text-red-500">*</span></FormLabel>
                                             <FormControl>
                                                 <Input placeholder="Enter your full name" {...field} />
                                             </FormControl>
@@ -134,7 +134,7 @@ const OwnerDetails = () => {
                                     rules={{ required: 'Personal Address is required' }}
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Personal Address</FormLabel>
+                                            <FormLabel>Personal Address<span className="text-red-500">*</span></FormLabel>
                                             <FormControl>
                                                 <Input placeholder="Enter your personal address" {...field} />
                                             </FormControl>
@@ -234,7 +234,7 @@ const OwnerDetails = () => {
                                     }}
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Contact Number</FormLabel>
+                                            <FormLabel>Contact Number<span className="text-red-500">*</span></FormLabel>
                                             <FormControl>
                                                 <Input type="tel" placeholder="Enter your contact number" {...field} />
                                             </FormControl>
@@ -253,7 +253,7 @@ const OwnerDetails = () => {
                                     }}
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Email Address (Optional)</FormLabel>
+                                            <FormLabel>Email Address</FormLabel>
                                             <FormControl>
                                                 <Input type="email" placeholder="Enter your email address" {...field} />
                                             </FormControl>

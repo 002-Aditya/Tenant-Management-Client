@@ -300,41 +300,41 @@ const Dashboard = ({ onLogout }) => {
         </div>
 
         {/* Quick Actions */}
-        <div className="mt-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>Quick Actions</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Link to="/owner-info">
-                  <Button 
-                    className="w-full btn-hover-lift transition-all duration-200 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800"
-                    data-testid="add-owner-info-btn"
-                  >
-                    Add Owner Information
-                  </Button>
-                </Link>
-                <Link to="/property-info">
-                  <Button 
-                    className="w-full btn-hover-lift transition-all duration-200 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
-                    data-testid="add-property-btn"
-                  >
-                    Add New Property
-                  </Button>
-                </Link>
-                <Link to="/tenants">
-                  <Button 
-                    className="w-full btn-hover-lift transition-all duration-200 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800"
-                    data-testid="manage-tenants-btn"
-                  >
-                    Manage Tenants
-                  </Button>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        {/*<div className="mt-8">*/}
+        {/*  <Card>*/}
+        {/*    <CardHeader>*/}
+        {/*      <CardTitle>Quick Actions</CardTitle>*/}
+        {/*    </CardHeader>*/}
+        {/*    <CardContent>*/}
+        {/*      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">*/}
+        {/*        <Link to="/owner-info">*/}
+        {/*          <Button */}
+        {/*            className="w-full btn-hover-lift transition-all duration-200 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800"*/}
+        {/*            data-testid="add-owner-info-btn"*/}
+        {/*          >*/}
+        {/*            Add Owner Information*/}
+        {/*          </Button>*/}
+        {/*        </Link>*/}
+        {/*        <Link to="/property-info">*/}
+        {/*          <Button */}
+        {/*            className="w-full btn-hover-lift transition-all duration-200 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"*/}
+        {/*            data-testid="add-property-btn"*/}
+        {/*          >*/}
+        {/*            Add New Property*/}
+        {/*          </Button>*/}
+        {/*        </Link>*/}
+        {/*        <Link to="/tenant-details">*/}
+        {/*          <Button */}
+        {/*            className="w-full btn-hover-lift transition-all duration-200 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800"*/}
+        {/*            data-testid="manage-tenants-btn"*/}
+        {/*          >*/}
+        {/*            Manage Tenants*/}
+        {/*          </Button>*/}
+        {/*        </Link>*/}
+        {/*      </div>*/}
+        {/*    </CardContent>*/}
+        {/*  </Card>*/}
+        {/*</div>*/}
       </main>
     </div>
   );

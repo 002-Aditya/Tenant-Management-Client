@@ -147,7 +147,7 @@ const TenantManager = () => {
         <div className="min-h-screen bg-gray-100">
             <TooltipProvider>
                 <NavBar></NavBar>
-                <div className="max-w-4xl mx-auto p-6">
+                <div className="max-w-5xl mx-auto p-6">
                     <Card className="border rounded-lg p-4 mb-6 shadow-sm">
                         <div className="mb-4">
                             <label className="text-lg font-semibold">

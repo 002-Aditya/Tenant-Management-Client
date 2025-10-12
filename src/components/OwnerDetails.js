@@ -10,9 +10,7 @@ import NavBar from "@/components/NavBar";
 import { Plus, Trash2 } from "lucide-react";
 
 const OwnerDetails = () => {
-    const [buildingEntries, setBuildingEntries] = useState([{ id: Date.now() }]);
-
-    // Form for Basic Information
+    // Form for Basic Information (now includes property details with rooms)
     const basicInfoForm = useForm({
         defaultValues: {
             fullName: '',
@@ -20,49 +18,50 @@ const OwnerDetails = () => {
             contactNumber: '',
             emailAddress: '',
             numTenantProperties: 1,
-            tenantProperties: [{ id: Date.now(), propertyType: '', address: '' }],
-        },
-    });
-
-    // Form for Rental Building Details
-    const buildingDetailsForm = useForm({
-        defaultValues: {
-            numBuildingDetails: 1,
-            buildingDetails: [{ id: Date.now(), property: '', totalRooms: '', filledRooms: '', emptyRooms: '' }],
+            tenantProperties: [{ id: Date.now(), propertyType: '', address: '', totalRooms: '', filledRooms: '', emptyRooms: '' }],
         },
     });
 
     const { control: basicControl, handleSubmit: handleBasicSubmit, watch: watchBasic, setValue: setBasicValue } = basicInfoForm;
-    const { control: buildingControl, handleSubmit: handleBuildingSubmit, watch: watchBuilding, setValue: setBuildingValue } = buildingDetailsForm;
 
     const numTenantProperties = watchBasic('numTenantProperties');
-    const tenantProperties = watchBasic('tenantProperties');
-    const numBuildingDetails = watchBuilding('numBuildingDetails');
-    const buildingDetails = watchBuilding('buildingDetails');
+    const tenantProperties = watchBasic('tenantProperties') || [];
 
     // Sync tenant properties based on numTenantProperties
     useEffect(() => {
         const count = parseInt(numTenantProperties, 10) || 0;
         const currentCount = tenantProperties.length;
         if (count > currentCount) {
-            const newProperties = Array.from({ length: count - currentCount }, () => ({ id: Date.now() + Math.random(), propertyType: '', address: '' }));
+            const newProperties = Array.from({ length: count - currentCount }, () => ({ id: Date.now() + Math.random(), propertyType: '', address: '', totalRooms: '', filledRooms: '', emptyRooms: '' }));
             setBasicValue('tenantProperties', [...tenantProperties, ...newProperties]);
         } else if (count < currentCount) {
             setBasicValue('tenantProperties', tenantProperties.slice(0, count));
         }
     }, [numTenantProperties, tenantProperties.length, setBasicValue]);
 
-    // Sync building details based on numBuildingDetails
+    // Function to calculate empty rooms
+    const calculateEmptyRooms = (totalRooms, filledRooms) => {
+        const total = parseInt(totalRooms) || 0;
+        const filled = parseInt(filledRooms) || 0;
+        return total - filled >= 0 ? total - filled : 0;
+    };
+
+    // Auto-update emptyRooms in form state whenever total or filled changes
     useEffect(() => {
-        const count = parseInt(numBuildingDetails, 10) || 0;
-        const currentCount = buildingDetails.length;
-        if (count > currentCount) {
-            const newEntries = Array.from({ length: count - currentCount }, () => ({ id: Date.now() + Math.random(), property: '', totalRooms: '', filledRooms: '', emptyRooms: '' }));
-            setBuildingValue('buildingDetails', [...buildingDetails, ...newEntries]);
-        } else if (count < currentCount) {
-            setBuildingValue('buildingDetails', buildingDetails.slice(0, count));
-        }
-    }, [numBuildingDetails, buildingDetails.length, setBuildingValue]);
+        const subscription = watchBasic((value, { name }) => {
+            if (name && name.startsWith('tenantProperties')) {
+                const match = name.match(/tenantProperties\.(\d+)\.(totalRooms|filledRooms)/);
+                if (match) {
+                    const index = parseInt(match[1], 10);
+                    const totalRooms = value.tenantProperties?.[index]?.totalRooms || '0';
+                    const filledRooms = value.tenantProperties?.[index]?.filledRooms || '0';
+                    const empty = calculateEmptyRooms(totalRooms, filledRooms).toString();
+                    setBasicValue(`tenantProperties.${index}.emptyRooms`, empty, { shouldDirty: false });
+                }
+            }
+        });
+        return () => subscription.unsubscribe();
+    }, [watchBasic, setBasicValue]);
 
     // Submit handler for Basic Information
     const onBasicSubmit = (data) => {
@@ -73,40 +72,12 @@ const OwnerDetails = () => {
         });
     };
 
-    // Submit handler for Rental Building Details
-    const onBuildingSubmit = (data) => {
-        console.log('Building Details Data:', data);
-        toast('Building Details submitted successfully!', {
-            description: 'Your building details have been saved.',
-            style: { background: '#60ea93', color: '#000' },
-        });
-    };
-
     const propertyTypes = ['Apartment', 'House', 'Condo', 'Townhouse'];
-
-    // Filter out tenant properties that are empty or undefined to avoid SelectItem error
-    const validTenantProperties = watchBasic('tenantProperties').filter(prop => prop && prop.address && prop.address.trim() !== '');
-
-    // Get selected property IDs for disabling in dropdowns
-    const selectedPropertyIds = buildingDetails
-        .map((detail, index) => ({ property: detail.property, index }))
-        .filter(detail => detail.property)
-        .map(detail => detail.property);
-
-    // Autopopulate Number of Empty Rooms for each building detail entry
-    useEffect(() => {
-        buildingDetails.forEach((_, index) => {
-            const totalRooms = parseInt(watchBuilding(`buildingDetails.${index}.totalRooms`)) || 0;
-            const filledRooms = parseInt(watchBuilding(`buildingDetails.${index}.filledRooms`)) || 0;
-            const emptyRooms = totalRooms - filledRooms >= 0 ? totalRooms - filledRooms : 0;
-            setBuildingValue(`buildingDetails.${index}.emptyRooms`, emptyRooms.toString(), { shouldValidate: true });
-        });
-    }, [buildingDetails, watchBuilding, setBuildingValue]);
 
     return (
         <div className="min-h-screen bg-gray-100">
             <NavBar />
-            <div className="max-w-4xl mx-auto p-6">
+            <div className="max-w-5xl mx-auto p-6">
                 {/* Section 1: Basic Information */}
                 <Card className="shadow-lg">
                     <CardHeader>
@@ -159,6 +130,7 @@ const OwnerDetails = () => {
                                                     <Input
                                                         type="number"
                                                         min="1"
+                                                        className="input-focus p-2 w-full transition-all duration-200 rounded"
                                                         placeholder="Enter number of tenant properties"
                                                         {...field}
                                                     />
@@ -170,13 +142,16 @@ const OwnerDetails = () => {
                                     {parseInt(numTenantProperties, 10) > 0 && (
                                         <Card className="space-y-4 bg-gray-50 p-4 rounded-md" style={{ backgroundColor: 'rgba(182,180,182,0.54)' }}>
                                             <h3 className="font-medium text-lg">Properties Details</h3>
-                                            <div className="flex gap-3 mb-2">
-                                                <FormLabel className="w-1/2 font-medium">Address <span className="text-red-500">*</span></FormLabel>
-                                                <FormLabel className="w-1/2 font-medium">Property Type <span className="text-red-500">*</span></FormLabel>
+                                            <div className="grid grid-cols-5 gap-3 mb-2">
+                                                <FormLabel className="font-medium">Address<span className="text-red-500">*</span></FormLabel>
+                                                <FormLabel className="font-medium">Property Type<span className="text-red-500">*</span></FormLabel>
+                                                <FormLabel className="font-medium">Total Rooms<span className="text-red-500">*</span></FormLabel>
+                                                <FormLabel className="font-medium">Occupied Rooms<span className="text-red-500">*</span></FormLabel>
+                                                <FormLabel className="font-medium">Empty Rooms</FormLabel>
                                             </div>
                                             {Array.from({ length: parseInt(numTenantProperties) || 0 }).map((_, index) => (
-                                                <div key={tenantProperties[index]?.id || index} className="flex gap-3">
-                                                    <div className="flex-1">
+                                                <div key={tenantProperties[index]?.id || index} className="grid grid-cols-5 gap-3">
+                                                    <div>
                                                         <FormField
                                                             control={basicControl}
                                                             name={`tenantProperties.${index}.address`}
@@ -186,7 +161,7 @@ const OwnerDetails = () => {
                                                                     <FormControl>
                                                                         <Input
                                                                             className="input-focus p-2 w-full transition-all duration-200 rounded"
-                                                                            placeholder="Address *"
+                                                                            placeholder="Address*"
                                                                             {...field}
                                                                             value={field.value || ''}
                                                                         />
@@ -196,7 +171,7 @@ const OwnerDetails = () => {
                                                             )}
                                                         />
                                                     </div>
-                                                    <div className="flex-1">
+                                                    <div>
                                                         <FormField
                                                             control={basicControl}
                                                             name={`tenantProperties.${index}.propertyType`}
@@ -206,7 +181,7 @@ const OwnerDetails = () => {
                                                                     <Select onValueChange={field.onChange} value={field.value}>
                                                                         <FormControl>
                                                                             <SelectTrigger>
-                                                                                <SelectValue placeholder="Select Property Type *" />
+                                                                                <SelectValue placeholder="Select*" />
                                                                             </SelectTrigger>
                                                                         </FormControl>
                                                                         <SelectContent>
@@ -217,6 +192,79 @@ const OwnerDetails = () => {
                                                                             ))}
                                                                         </SelectContent>
                                                                     </Select>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <FormField
+                                                            control={basicControl}
+                                                            name={`tenantProperties.${index}.totalRooms`}
+                                                            rules={{
+                                                                required: 'Total Rooms is required',
+                                                                pattern: { value: /^[0-9]+$/, message: 'Enter a valid number' },
+                                                            }}
+                                                            render={({ field }) => (
+                                                                <FormItem>
+                                                                    <FormControl>
+                                                                        <Input
+                                                                            type="number"
+                                                                            min="0"
+                                                                            className="input-focus p-2 w-full transition-all duration-200 rounded"
+                                                                            placeholder="Total Rooms*"
+                                                                            {...field}
+                                                                            value={field.value || ''}
+                                                                        />
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <FormField
+                                                            control={basicControl}
+                                                            name={`tenantProperties.${index}.filledRooms`}
+                                                            rules={{
+                                                                required: 'Occupied Rooms is required',
+                                                                pattern: { value: /^[0-9]+$/, message: 'Enter a valid number' },
+                                                                validate: (value) => {
+                                                                    const total = parseInt(watchBasic(`tenantProperties.${index}.totalRooms`)) || 0;
+                                                                    return parseInt(value) <= total || 'Occupied cannot exceed Total';
+                                                                },
+                                                            }}
+                                                            render={({ field }) => (
+                                                                <FormItem>
+                                                                    <FormControl>
+                                                                        <Input
+                                                                            type="number"
+                                                                            min="0"
+                                                                            className="input-focus p-2 w-full transition-all duration-200 rounded"
+                                                                            placeholder="Occupied Rooms*"
+                                                                            {...field}
+                                                                            value={field.value || ''}
+                                                                        />
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <FormField
+                                                            control={basicControl}
+                                                            name={`tenantProperties.${index}.emptyRooms`}
+                                                            render={({ field }) => (
+                                                                <FormItem>
+                                                                    <FormControl>
+                                                                        <Input
+                                                                            disabled
+                                                                            className="input-focus p-2 w-full transition-all duration-200 rounded bg-gray-200"
+                                                                            placeholder="Auto-calculated"
+                                                                            {...field}
+                                                                        />
+                                                                    </FormControl>
                                                                     <FormMessage />
                                                                 </FormItem>
                                                             )}

@@ -19,7 +19,7 @@ const OwnerDetails = () => {
             contactNumber: '',
             emailAddress: '',
             numTenantProperties: 1,
-            tenantProperties: [{ id: Date.now(), propertyType: '', address: '', totalRooms: '', filledRooms: '', emptyRooms: '' }],
+            tenantProperties: [{ id: Date. now(), propertyType: '', address: '', totalRooms: '', filledRooms: '', emptyRooms: '' }],
         },
     });
 
@@ -84,10 +84,10 @@ const OwnerDetails = () => {
                     <CardHeader>
                         <CardTitle className="text-2xl font-bold">Basic Information</CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-4">
+                    <CardContent className="space-y-6">
                         <Form {...basicInfoForm}>
                             <form onSubmit={handleBasicSubmit(onBasicSubmit)} className="space-y-6">
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <FormField
                                         control={basicControl}
                                         name="firstName"
@@ -146,7 +146,7 @@ const OwnerDetails = () => {
                                                 <FormControl>
                                                     <Input
                                                         type="number"
-                                                        min="1"
+                                                        min="1 Koo"
                                                         className="input-focus p-2 w-full transition-all duration-200 rounded"
                                                         placeholder="Enter number of tenant properties"
                                                         {...field}
@@ -159,7 +159,7 @@ const OwnerDetails = () => {
                                     {parseInt(numTenantProperties, 10) > 0 && (
                                         <Card className="space-y-4 bg-gray-50 p-4 rounded-md" style={{ backgroundColor: 'rgba(182,180,182,0.54)' }}>
                                             <h3 className="font-medium text-lg">Properties Details</h3>
-                                            <div className="grid grid-cols-5 gap-3 mb-2">
+                                            <div className="hidden sm:grid grid-cols-5 gap-3 mb-2">
                                                 <FormLabel className="font-medium">Address<span className="text-red-500">*</span></FormLabel>
                                                 <FormLabel className="font-medium">Property Type<span className="text-red-500">*</span></FormLabel>
                                                 <FormLabel className="font-medium">Total Rooms<span className="text-red-500">*</span></FormLabel>
@@ -167,8 +167,9 @@ const OwnerDetails = () => {
                                                 <FormLabel className="font-medium">Empty Rooms</FormLabel>
                                             </div>
                                             {Array.from({ length: parseInt(numTenantProperties) || 0 }).map((_, index) => (
-                                                <div key={tenantProperties[index]?.id || index} className="grid grid-cols-5 gap-3">
-                                                    <div>
+                                                <div key={tenantProperties[index]?.id || index} className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-5 sm:gap-3 border-b pb-4 sm:pb-0 sm:border-0">
+                                                    <div className="space-y-1">
+                                                        <FormLabel className="sm:hidden">Address<span className="text-red-500">*</span></FormLabel>
                                                         <FormField
                                                             control={basicControl}
                                                             name={`tenantProperties.${index}.address`}
@@ -188,7 +189,8 @@ const OwnerDetails = () => {
                                                             )}
                                                         />
                                                     </div>
-                                                    <div>
+                                                    <div className="space-y-1">
+                                                        <FormLabel className="sm:hidden">Property Type<span className="text-red-500">*</span></FormLabel>
                                                         <FormField
                                                             control={basicControl}
                                                             name={`tenantProperties.${index}.propertyType`}
@@ -214,7 +216,8 @@ const OwnerDetails = () => {
                                                             )}
                                                         />
                                                     </div>
-                                                    <div>
+                                                    <div className="space-y-1">
+                                                        <FormLabel className="sm:hidden">Total Rooms<span className="text-red-500">*</span></FormLabel>
                                                         <FormField
                                                             control={basicControl}
                                                             name={`tenantProperties.${index}.totalRooms`}
@@ -239,7 +242,8 @@ const OwnerDetails = () => {
                                                             )}
                                                         />
                                                     </div>
-                                                    <div>
+                                                    <div className="space-y-1">
+                                                        <FormLabel className="sm:hidden">Occupied Rooms<span className="text-red-500">*</span></FormLabel>
                                                         <FormField
                                                             control={basicControl}
                                                             name={`tenantProperties.${index}.filledRooms`}
@@ -268,7 +272,8 @@ const OwnerDetails = () => {
                                                             )}
                                                         />
                                                     </div>
-                                                    <div>
+                                                    <div className="space-y-1">
+                                                        <FormLabel className="sm:hidden">Empty Rooms</FormLabel>
                                                         <FormField
                                                             control={basicControl}
                                                             name={`tenantProperties.${index}.emptyRooms`}
@@ -292,7 +297,7 @@ const OwnerDetails = () => {
                                         </Card>
                                     )}
                                 </div>
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <FormField
                                         control={basicControl}
                                         name="contactNumber"

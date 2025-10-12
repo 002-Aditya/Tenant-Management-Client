@@ -113,7 +113,7 @@ const TenantManager = () => {
 
         let hasError = false;
         rooms.forEach((room, index) => {
-            if (!room.tenantName || !room.numRoommates || !room.startDate || !room.endDate || room.contacts[0] === "") {
+            if (!room.tenantName || !room.numRoommates || !room.startDate || room.contacts[0] === "") {
                 hasError = true;
             }
         });

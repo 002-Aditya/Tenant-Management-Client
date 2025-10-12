@@ -10,6 +10,7 @@ import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider, } from "@/com
 import { toast } from "@/components/ui/sonner";
 import NavBar from "@/components/NavBar";
 import { Input } from "@/components/ui/input";
+import {Card} from "@/components/ui/card";
 
 const TenantManager = () => {
     const [rooms, setRooms] = useState([
@@ -147,7 +148,7 @@ const TenantManager = () => {
             <TooltipProvider>
                 <NavBar></NavBar>
                 <div className="max-w-4xl mx-auto p-6">
-                    <div className="border rounded-lg p-4 mb-6 bg-white shadow-sm">
+                    <Card className="border rounded-lg p-4 mb-6 shadow-sm">
                         <div className="mb-4">
                             <label className="text-lg font-semibold">
                                 Property Address<span className="text-red-500">*</span>
@@ -165,11 +166,11 @@ const TenantManager = () => {
                             ))}
                             </SelectContent>
                         </Select>
-                    </div>
+                    </Card>
 
                     <form onSubmit={handleSubmit}>
                         {rooms.map((room, index) => (
-                            <div
+                            <Card
                                 key={index}
                                 className="border rounded-lg p-6 mb-6 bg-white shadow-sm"
                             >
@@ -414,7 +415,7 @@ const TenantManager = () => {
                                         className="input-focus transition-all duration-200 rounded w-full rounded"
                                     />
                                 </div>
-                            </div>
+                            </Card>
                         ))}
 
                         {/* Submit */}

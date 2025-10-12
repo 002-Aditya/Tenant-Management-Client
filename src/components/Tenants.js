@@ -371,6 +371,17 @@ const TenantManager = () => {
                                                 className="input-focus transition-all p-2 duration-200 rounded flex-1"
                                                 required={i === 0}
                                             />
+                                            <Tooltip>
+                                                <TooltipTrigger asChild>
+                                                    <Plus
+                                                        className="cursor-pointer hover:text-blue-600"
+                                                        onClick={() => addContact(index)}
+                                                    />
+                                                </TooltipTrigger>
+                                                <TooltipContent>
+                                                    <p>Add another contact number</p>
+                                                </TooltipContent>
+                                            </Tooltip>
                                             {i > 0 && (
                                                 <Tooltip>
                                                     <TooltipTrigger asChild>
@@ -386,13 +397,6 @@ const TenantManager = () => {
                                             )}
                                         </div>
                                     ))}
-                                    <button
-                                        type="button"
-                                        className="text-blue-500 mt-2"
-                                        onClick={() => addContact(index)}
-                                    >
-                                        + Add Another Contact Number
-                                    </button>
                                 </div>
 
                                 {/* Photo Upload */}

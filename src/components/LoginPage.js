@@ -160,8 +160,8 @@ const LoginPage = ({ onLogin }) => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h4M9 7h6m-6 4h6m-5 4h5" />
                 </svg>
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
-              <p className="text-gray-600">Sign in to manage your properties</p>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome</h2>
+              <p className="text-gray-600">Manage your tenant properties seamlessly</p>
             </div>
 
             {!showOtpInput ? (
@@ -172,8 +172,9 @@ const LoginPage = ({ onLogin }) => {
                   </label>
                   <Input
                     type="tel"
-                    placeholder="Enter your phone number"
+                    placeholder="e.g, 9999999999"
                     value={phoneNumber}
+                    required
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     className="input-focus transition-all duration-200 rounded"
                     data-testid="phone-input"

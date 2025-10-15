@@ -76,7 +76,7 @@ const OwnerDetails = () => {
     const propertyTypes = ['Apartment', 'House', 'Condo', 'Townhouse'];
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-white">
             <NavBar />
             <div className="max-w-5xl mx-auto p-6">
                 {/* Section 1: Basic Information */}
@@ -157,7 +157,7 @@ const OwnerDetails = () => {
                                         )}
                                     />
                                     {parseInt(numTenantProperties, 10) > 0 && (
-                                        <Card className="space-y-4 bg-gray-50 p-4 rounded-md" style={{ backgroundColor: 'rgba(182,180,182,0.54)' }}>
+                                        <Card className="space-y-4 bg-gray-50 p-4 rounded-md" style={{ backgroundColor: '#ededed' }}>
                                             <h3 className="font-medium text-lg">Properties Details</h3>
                                             <div className="hidden sm:grid grid-cols-5 gap-3 mb-2">
                                                 <FormLabel className="font-medium">Address<span className="text-red-500">*</span></FormLabel>

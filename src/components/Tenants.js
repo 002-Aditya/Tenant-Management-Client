@@ -144,7 +144,7 @@ const TenantManager = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-white">
             <TooltipProvider>
                 <NavBar></NavBar>
                 <div className="max-w-5xl mx-auto p-6">

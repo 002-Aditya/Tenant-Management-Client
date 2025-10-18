@@ -11,13 +11,15 @@ import NavBar from "@/components/NavBar";
 const OwnerDetails = () => {
     const basicInfoForm = useForm({
         defaultValues: {
-            firstName: '',
-            lastName: '',
-            personalAddress: '',
-            contactNumber: '',
-            email: '',
-            genderId: '',
-            numTenantProperties: 1,
+            ownerDetails: {
+                firstName: '',
+                lastName: '',
+                personalAddress: '',
+                contactNumber: '',
+                email: '',
+                genderId: '',
+                numTenantProperties: 1
+            },
             tenantProperties: [{
                 propertyType: '',
                 address: '',
@@ -77,12 +79,50 @@ const OwnerDetails = () => {
         return () => subscription.unsubscribe();
     }, [watchBasic, setBasicValue]);
 
-    const onBasicSubmit = (data) => {
-        console.log('Basic Information Data:', data);
+    // ✅ MODIFIED onBasicSubmit ONLY
+    const onBasicSubmit = (formData) => {
+        const {
+            firstName,
+            lastName,
+            personalAddress,
+            contactNumber,
+            email,
+            gender,
+            numTenantProperties,
+            tenantProperties
+        } = formData;
+
+        const payload = {
+            ownerDetails: {
+                firstName,
+                lastName,
+                personalAddress,
+                contactNumber,
+                email,
+                genderId: gender,
+                numTenantProperties: parseInt(numTenantProperties, 10)
+            },
+            tenantProperties: tenantProperties.map((property) => ({
+                propertyType: property.propertyType,
+                address: property.address,
+                totalRooms: property.totalRooms,
+                filledRooms: property.filledRooms,
+                emptyRooms: property.emptyRooms
+            }))
+        };
+
+        console.log('Formatted Payload:', payload);
+
         toast('Basic Information submitted successfully!', {
             description: 'Your details have been saved.',
             style: { background: '#2ec5bc', color: '#000' },
         });
+
+        // fetch('/api/submit', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(payload)
+        // });
     };
 
     const propertyTypes = ['Apartment', 'House', 'Condo', 'Townhouse'];
